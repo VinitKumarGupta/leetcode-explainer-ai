@@ -12,6 +12,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+// Routes all requests to /api/auth/* to the authRoutes module
 app.use("/api/auth", authRoutes);
 
 app.get("/", (req, res) => {
