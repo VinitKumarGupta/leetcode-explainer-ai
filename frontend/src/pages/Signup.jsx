@@ -32,9 +32,10 @@ const Signup = () => {
     return (
         <div className="signup-container">
             <div className="signup-card">
-                <h2 className="signup-title">
-                    Create Account
+                <h2 className="signup-title brand-gradient-text">
+                    Explaina
                 </h2>
+                <p className="signup-subtitle">Create your account</p>
                 
                 {error && (
                     <div className="signup-error">

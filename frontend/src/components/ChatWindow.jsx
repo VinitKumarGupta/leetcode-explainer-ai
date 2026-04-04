@@ -4,11 +4,11 @@ import "./ChatWindow.css";
 
 const ChatWindow = ({ activeChat, isLoading, onSend }) => {
     const [problemText, setProblemText] = useState("");
+    const [language, setLanguage] = useState("Python");
 
     const handleSend = () => {
         if (!problemText.trim()) return;
-        onSend(problemText);
-        setProblemText(""); // Clear once passed up
+        onSend(problemText, language);
     };
 
     const handleKeyDown = (e) => {
@@ -32,31 +32,46 @@ const ChatWindow = ({ activeChat, isLoading, onSend }) => {
                     </div>
                 )}
                 
-                {isLoading && (
-                    <div className="loading-indicator">
-                        Generating AI Explanation...
-                    </div>
-                )}
-            </div>
+            {isLoading && (
+                <div className="typing-indicator">
+                    AI is thinking<span className="dots"></span>
+                </div>
+            )}
+        </div>
 
+        {!activeChat && (
             <div className="input-area">
                 <textarea
                     className="chat-input"
                     rows="3"
-                    placeholder="Paste your LeetCode problem here..."
+                    placeholder="Paste your LeetCode problem or link here..."
                     value={problemText}
                     onChange={(e) => setProblemText(e.target.value)}
                     onKeyDown={handleKeyDown}
                 />
-                <button 
-                    className="send-button"
-                    onClick={handleSend}
-                    disabled={isLoading || !problemText.trim()}
-                >
-                    Send
-                </button>
+                <div className="action-row">
+                    <select 
+                        className="language-select"
+                        value={language}
+                        onChange={(e) => setLanguage(e.target.value)}
+                    >
+                        <option value="Python">Python</option>
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="Java">Java</option>
+                        <option value="C++">C++</option>
+                        <option value="Go">Go</option>
+                    </select>
+                    <button 
+                        className="send-button"
+                        onClick={handleSend}
+                        disabled={isLoading || !problemText.trim()}
+                    >
+                        Get Explanation
+                    </button>
+                </div>
             </div>
-        </div>
+        )}
+    </div>
     );
 };
 

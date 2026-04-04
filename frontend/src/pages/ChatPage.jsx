@@ -21,7 +21,7 @@ const ChatPage = () => {
         fetchChats();
     }, []);
 
-    const handleSend = async (problemText) => {
+    const handleSend = async (problemText, language) => {
         setIsLoading(true);
         
         const tempChat = {
@@ -33,7 +33,7 @@ const ChatPage = () => {
         setActiveChat(tempChat);
 
         try {
-            const response = await api.post("/chat/create", { problemText });
+            const response = await api.post("/chat/create", { problemText, language });
             const newChat = response.data;
             
             setActiveChat(newChat);
@@ -45,9 +45,31 @@ const ChatPage = () => {
         }
     };
 
+    const handleNewChat = () => {
+        setActiveChat(null);
+    };
+
+    const handleDeleteChat = async (chatId) => {
+        try {
+            await api.delete(`/chat/${chatId}`);
+            setChats(chats.filter(c => c._id !== chatId));
+            if (activeChat?._id === chatId) {
+                setActiveChat(null);
+            }
+        } catch (err) {
+            console.error("Failed to delete chat:", err);
+        }
+    };
+
     return (
         <div className="chat-container">
-            <Sidebar chats={chats} onSelectChat={setActiveChat} />
+            <Sidebar 
+                chats={chats} 
+                activeChat={activeChat}
+                onSelectChat={setActiveChat} 
+                onNewChat={handleNewChat} 
+                onDeleteChat={handleDeleteChat}
+            />
             <ChatWindow 
                 activeChat={activeChat} 
                 isLoading={isLoading} 
