@@ -55,6 +55,19 @@ const ChatPage = () => {
         setSidebarOpen(false);
     };
 
+    const handleRenameChat = async (chatId, title) => {
+        try {
+            const response = await api.patch(`/chat/${chatId}/rename`, { title });
+            const updatedChat = response.data;
+            setChats(chats.map(c => c._id === chatId ? updatedChat : c));
+            if (activeChat?._id === chatId) {
+                setActiveChat(updatedChat);
+            }
+        } catch (err) {
+            console.error("Failed to rename chat:", err);
+        }
+    };
+
     const handleDeleteChat = async (chatId) => {
         try {
             await api.delete(`/chat/${chatId}`);
@@ -94,6 +107,7 @@ const ChatPage = () => {
                 onSelectChat={handleSelectChat} 
                 onNewChat={handleNewChat} 
                 onDeleteChat={handleDeleteChat}
+                onRenameChat={handleRenameChat}
                 isOpen={sidebarOpen}
                 onClose={() => setSidebarOpen(false)}
             />
