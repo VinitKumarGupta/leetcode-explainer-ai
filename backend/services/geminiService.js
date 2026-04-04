@@ -10,7 +10,7 @@ export const generateExplanation = async (problemText, language = "Python") => {
             );
         }
 
-        const prompt = `You are an expert Data Structures and Algorithms tutor helping students understand coding and competitive programming problems (from platforms like LeetCode, Codeforces, AtCoder, HackerRank, etc.).
+        const prompt = `You are an expert Data Structures and Algorithms tutor helping students understand coding interview problems.
 
 Behavior:
 Provide a strictly structured explanation for the problem using exactly this format:

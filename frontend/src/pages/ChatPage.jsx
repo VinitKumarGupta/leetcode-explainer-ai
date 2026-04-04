@@ -24,21 +24,22 @@ const ChatPage = () => {
 
     const handleSend = async (problemText, language) => {
         setIsLoading(true);
-        
+
         const tempChat = {
             _id: "temp",
-            messages: [
-                { role: "user", content: problemText }
-            ]
+            messages: [{ role: "user", content: problemText }],
         };
         setActiveChat(tempChat);
 
         try {
-            const response = await api.post("/chat/create", { problemText, language });
+            const response = await api.post("/chat/create", {
+                problemText,
+                language,
+            });
             const newChat = response.data;
-            
+
             setActiveChat(newChat);
-            setChats([newChat, ...chats]); 
+            setChats([newChat, ...chats]);
         } catch (err) {
             console.error("Failed to generate explanation:", err);
         } finally {
@@ -57,9 +58,11 @@ const ChatPage = () => {
 
     const handleRenameChat = async (chatId, title) => {
         try {
-            const response = await api.patch(`/chat/${chatId}/rename`, { title });
+            const response = await api.patch(`/chat/${chatId}/rename`, {
+                title,
+            });
             const updatedChat = response.data;
-            setChats(chats.map(c => c._id === chatId ? updatedChat : c));
+            setChats(chats.map((c) => (c._id === chatId ? updatedChat : c)));
             if (activeChat?._id === chatId) {
                 setActiveChat(updatedChat);
             }
@@ -71,7 +74,7 @@ const ChatPage = () => {
     const handleDeleteChat = async (chatId) => {
         try {
             await api.delete(`/chat/${chatId}`);
-            setChats(chats.filter(c => c._id !== chatId));
+            setChats(chats.filter((c) => c._id !== chatId));
             if (activeChat?._id === chatId) {
                 setActiveChat(null);
             }
@@ -89,8 +92,18 @@ const ChatPage = () => {
                     onClick={() => setSidebarOpen(true)}
                     aria-label="Open sidebar"
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={2}
+                        stroke="currentColor"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                        />
                     </svg>
                 </button>
             )}
@@ -101,20 +114,20 @@ const ChatPage = () => {
                 onClick={() => setSidebarOpen(false)}
             />
 
-            <Sidebar 
-                chats={chats} 
+            <Sidebar
+                chats={chats}
                 activeChat={activeChat}
-                onSelectChat={handleSelectChat} 
-                onNewChat={handleNewChat} 
+                onSelectChat={handleSelectChat}
+                onNewChat={handleNewChat}
                 onDeleteChat={handleDeleteChat}
                 onRenameChat={handleRenameChat}
                 isOpen={sidebarOpen}
                 onClose={() => setSidebarOpen(false)}
             />
-            <ChatWindow 
-                activeChat={activeChat} 
-                isLoading={isLoading} 
-                onSend={handleSend} 
+            <ChatWindow
+                activeChat={activeChat}
+                isLoading={isLoading}
+                onSend={handleSend}
             />
         </div>
     );
