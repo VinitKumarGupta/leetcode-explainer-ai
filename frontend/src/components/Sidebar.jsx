@@ -94,7 +94,7 @@ const Sidebar = ({
                 ))}
             </div>
             <div className="sidebar-footer">
-                Made with ❤️ by{" "}
+                Made with <span className="heart-glow">❤️</span> by{" "}
                 <a
                     href="https://github.com/VinitKumarGupta"
                     target="_blank"
