@@ -1,4 +1,5 @@
 import React from "react";
+import ReactMarkdown from "react-markdown";
 import "./MessageBubble.css";
 
 const MessageBubble = ({ role, content }) => {
@@ -6,8 +7,12 @@ const MessageBubble = ({ role, content }) => {
     
     return (
         <div className={`message-bubble ${isUser ? "message-user" : "message-assistant"}`}>
-            <div className="message-content">
-                {content}
+            <div className={`message-content ${isUser ? "user-content" : "assistant-content"}`}>
+                {isUser ? (
+                    content
+                ) : (
+                    <ReactMarkdown>{content}</ReactMarkdown>
+                )}
             </div>
         </div>
     );
