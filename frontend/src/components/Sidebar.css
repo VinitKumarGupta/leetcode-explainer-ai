@@ -180,3 +180,21 @@
 .sidebar-footer a:hover {
     color: #fff;
 }
+
+/* ========== Heart Glow Animation ========== */
+.heart-glow {
+    display: inline-block;
+    animation: heartPulse 1.8s ease-in-out infinite;
+    filter: drop-shadow(0 0 4px rgba(255, 100, 150, 0.6));
+}
+
+@keyframes heartPulse {
+    0%, 100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 4px rgba(255, 100, 150, 0.4));
+    }
+    50% {
+        transform: scale(1.25);
+        filter: drop-shadow(0 0 10px rgba(255, 100, 150, 0.9));
+    }
+}

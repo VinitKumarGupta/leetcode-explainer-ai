@@ -39,6 +39,7 @@ const Login = () => {
         <div className="login-container">
             <div className="login-card">
                 <h2 className="login-title brand-gradient-text">Explaina</h2>
+                <p className="login-subtitle">Sign in to your account</p>
 
                 {error && <div className="login-error">{error}</div>}
 
