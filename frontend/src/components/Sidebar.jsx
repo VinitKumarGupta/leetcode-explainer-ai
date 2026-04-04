@@ -10,6 +10,7 @@ const Sidebar = ({
     onRenameChat,
     isOpen,
     onClose,
+    isLoading,
 }) => {
     const [editingChatId, setEditingChatId] = useState(null);
     const [editTitle, setEditTitle] = useState("");
@@ -59,7 +60,12 @@ const Sidebar = ({
                     </svg>
                 </button>
             </div>
-            <button className="new-chat-button" onClick={onNewChat}>
+            <button 
+                className="new-chat-button" 
+                onClick={onNewChat}
+                disabled={isLoading}
+                style={{ opacity: isLoading ? 0.6 : 1, cursor: isLoading ? "not-allowed" : "pointer" }}
+            >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="16"

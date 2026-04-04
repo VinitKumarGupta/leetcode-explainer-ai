@@ -40,7 +40,7 @@ const ChatWindow = ({ activeChat, isLoading, onSend }) => {
                     </div>
                 )}
 
-                {isLoading && (
+                {isLoading && activeChat?._id === "temp" && (
                     <div className="typing-indicator">
                         AI is thinking
                         <div className="typing-dots">

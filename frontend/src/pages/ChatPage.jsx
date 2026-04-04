@@ -38,8 +38,8 @@ const ChatPage = () => {
             });
             const newChat = response.data;
 
-            setActiveChat(newChat);
-            setChats([newChat, ...chats]);
+            setActiveChat((prev) => (prev && prev._id === "temp" ? newChat : prev));
+            setChats((prevChats) => [newChat, ...prevChats]);
         } catch (err) {
             console.error("Failed to generate explanation:", err);
         } finally {
@@ -48,7 +48,9 @@ const ChatPage = () => {
     };
 
     const handleNewChat = () => {
-        setActiveChat(null);
+        if (!isLoading) {
+            setActiveChat(null);
+        }
     };
 
     const handleSelectChat = (chat) => {
@@ -123,6 +125,7 @@ const ChatPage = () => {
                 onRenameChat={handleRenameChat}
                 isOpen={sidebarOpen}
                 onClose={() => setSidebarOpen(false)}
+                isLoading={isLoading}
             />
             <ChatWindow
                 activeChat={activeChat}
