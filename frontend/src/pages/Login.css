@@ -77,11 +77,31 @@
     font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
     margin-top: 1rem;
 }
 
 .login-button:hover {
     transform: translateY(-1px);
     box-shadow: 0 10px 25px -5px rgba(0, 210, 255, 0.3);
+}
+
+.login-footer {
+    text-align: center;
+    margin-top: 2rem;
+    color: #94a3b8;
+    font-size: 0.95rem;
+}
+
+.login-footer a {
+    color: #00d2ff;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.login-footer a:hover {
+    color: #3a7bd5;
 }

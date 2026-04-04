@@ -16,7 +16,7 @@ const App = () => {
         <Router>
             <Routes>
                 {/* Default route strictly redirects to login */}
-                <Route path="/" element={<Navigate to="/login" replace />} />
+                <Route path="/" element={<Navigate to="/signup" replace />} />
 
                 {/* Application Pages */}
                 <Route path="/login" element={<Login />} />
@@ -24,7 +24,7 @@ const App = () => {
                 <Route path="/chat" element={<ChatPage />} />
 
                 {/* Catch-all route to prevent 404s, routes back to login */}
-                <Route path="*" element={<Navigate to="/login" replace />} />
+                <Route path="*" element={<Navigate to="/signup" replace />} />
             </Routes>
         </Router>
     );

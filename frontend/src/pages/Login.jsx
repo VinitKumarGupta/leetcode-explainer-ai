@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import api from "../services/api";
 import "./Login.css";
 
@@ -29,7 +29,8 @@ const Login = () => {
         } catch (err) {
             console.error("Login Error:", err);
             setError(
-                err.response?.data?.message || "Something went wrong during login."
+                err.response?.data?.message ||
+                    "Something went wrong during login.",
             );
         }
     };
@@ -37,15 +38,9 @@ const Login = () => {
     return (
         <div className="login-container">
             <div className="login-card">
-                <h2 className="login-title brand-gradient-text">
-                    Explaina
-                </h2>
-                
-                {error && (
-                    <div className="login-error">
-                        {error}
-                    </div>
-                )}
+                <h2 className="login-title brand-gradient-text">Explaina</h2>
+
+                {error && <div className="login-error">{error}</div>}
 
                 <form onSubmit={handleSubmit} className="login-form">
                     <div className="form-group">
@@ -74,10 +69,12 @@ const Login = () => {
                         Sign In
                     </button>
                 </form>
+                <p className="login-footer">
+                    Don't have an account? <Link to="/signup">Signup here</Link>
+                </p>
             </div>
         </div>
     );
 };
 
 export default Login;
-
