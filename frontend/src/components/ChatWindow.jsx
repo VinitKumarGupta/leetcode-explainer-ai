@@ -27,51 +27,56 @@ const ChatWindow = ({ activeChat, isLoading, onSend }) => {
                     ))
                 ) : (
                     <div className="welcome-message">
-                        <h2>Welcome to AI LeetCode Explainer</h2>
-                        <p>Paste a Data Structure or Algorithm problem below to get started!</p>
+                        <h2 className="brand-gradient-text">Explaina</h2>
+                        <p>Paste any DSA or LeetCode problem below and get a step-by-step explanation with code in your preferred language.</p>
                     </div>
                 )}
                 
-            {isLoading && (
-                <div className="typing-indicator">
-                    AI is thinking<span className="dots"></span>
+                {isLoading && (
+                    <div className="typing-indicator">
+                        AI is thinking
+                        <div className="typing-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+                )}
+            </div>
+
+            {!activeChat && (
+                <div className="input-area">
+                    <textarea
+                        className="chat-input"
+                        rows="3"
+                        placeholder="Paste your LeetCode problem or link here..."
+                        value={problemText}
+                        onChange={(e) => setProblemText(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                    />
+                    <div className="action-row">
+                        <select 
+                            className="language-select"
+                            value={language}
+                            onChange={(e) => setLanguage(e.target.value)}
+                        >
+                            <option value="Python">Python</option>
+                            <option value="JavaScript">JavaScript</option>
+                            <option value="Java">Java</option>
+                            <option value="C++">C++</option>
+                            <option value="Go">Go</option>
+                        </select>
+                        <button 
+                            className="send-button"
+                            onClick={handleSend}
+                            disabled={isLoading || !problemText.trim()}
+                        >
+                            Get Explanation
+                        </button>
+                    </div>
                 </div>
             )}
         </div>
-
-        {!activeChat && (
-            <div className="input-area">
-                <textarea
-                    className="chat-input"
-                    rows="3"
-                    placeholder="Paste your LeetCode problem or link here..."
-                    value={problemText}
-                    onChange={(e) => setProblemText(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                />
-                <div className="action-row">
-                    <select 
-                        className="language-select"
-                        value={language}
-                        onChange={(e) => setLanguage(e.target.value)}
-                    >
-                        <option value="Python">Python</option>
-                        <option value="JavaScript">JavaScript</option>
-                        <option value="Java">Java</option>
-                        <option value="C++">C++</option>
-                        <option value="Go">Go</option>
-                    </select>
-                    <button 
-                        className="send-button"
-                        onClick={handleSend}
-                        disabled={isLoading || !problemText.trim()}
-                    >
-                        Get Explanation
-                    </button>
-                </div>
-            </div>
-        )}
-    </div>
     );
 };
 

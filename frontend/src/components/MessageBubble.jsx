@@ -29,32 +29,16 @@ const CodeBlock = ({ inline, className, children, ...props }) => {
 
     if (!inline && match) {
         return (
-            <div
-                style={{
-                    position: "relative",
-                    marginTop: "0.5rem",
-                    marginBottom: "0.5rem",
-                }}
-            >
-                <button
-                    onClick={handleCopy}
-                    style={{
-                        position: "absolute",
-                        top: "0.5rem",
-                        right: "0.5rem",
-                        padding: "0.25rem 0.5rem",
-                        backgroundColor: "#333",
-                        color: "#fff",
-                        border: "none",
-                        borderRadius: "4px",
-                        fontSize: "0.75rem",
-                        cursor: "pointer",
-                        opacity: 0.9,
-                        zIndex: 1,
-                    }}
-                >
-                    {isCopied ? "Copied!" : "Copy"}
-                </button>
+            <div className="code-block-wrapper">
+                <div className="code-block-header">
+                    <span className="code-block-lang">{match[1]}</span>
+                    <button
+                        onClick={handleCopy}
+                        className={`copy-btn ${isCopied ? "copied" : ""}`}
+                    >
+                        {isCopied ? "✓ Copied" : "Copy"}
+                    </button>
+                </div>
                 <SyntaxHighlighter
                     {...props}
                     style={vscDarkPlus}
@@ -63,13 +47,14 @@ const CodeBlock = ({ inline, className, children, ...props }) => {
                     customStyle={{
                         margin: 0,
                         padding: "1rem",
-                        paddingTop:
-                            "2.5rem" /* Extra padding so text doesn't hide behind button */,
-                        borderRadius: "8px",
+                        borderRadius: "0",
                         overflowX: "auto",
                         maxWidth: "100%",
+                        background: "rgba(0, 0, 0, 0.35)",
                         fontFamily:
-                            'ui-monospace, Consolas, "Liberation Mono", Menlo, monospace',
+                            "'JetBrains Mono', ui-monospace, Consolas, 'Liberation Mono', Menlo, monospace",
+                        fontSize: "0.85rem",
+                        lineHeight: "1.6",
                     }}
                 >
                     {codeString}
@@ -82,10 +67,12 @@ const CodeBlock = ({ inline, className, children, ...props }) => {
         <code
             className={className}
             style={{
-                backgroundColor: "#e9ecef",
-                padding: "0.2rem 0.4rem",
+                backgroundColor: "rgba(0, 210, 255, 0.08)",
+                color: "#7dd3fc",
+                padding: "0.15rem 0.4rem",
                 borderRadius: "4px",
-                fontFamily: "monospace",
+                fontFamily: "'JetBrains Mono', monospace",
+                fontSize: "0.85em",
             }}
             {...props}
         >

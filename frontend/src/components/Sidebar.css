@@ -1,82 +1,160 @@
+/* ========== Sidebar Container ========== */
 .sidebar {
-    width: 250px;
-    background-color: #2c3e50;
-    color: white;
-    padding: 1rem;
-    overflow-y: auto;
-    border-right: 1px solid #1a252f;
+    width: 270px;
+    min-width: 270px;
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-right: 1px solid var(--border-subtle);
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: background 0.3s ease;
 }
 
-.sidebar h3 {
-    margin-top: 0;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #34495e;
+/* ========== Header ========== */
+.sidebar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 1.25rem;
+    margin-bottom: 0.25rem;
+    border-bottom: 1px solid var(--border-subtle);
 }
 
+.sidebar-header h3 {
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.sidebar-close-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 4px;
+    border-radius: var(--radius-sm);
+    transition: color 0.2s;
+}
+
+.sidebar-close-btn:hover {
+    color: var(--text-primary);
+}
+
+.sidebar-close-btn svg {
+    width: 18px;
+    height: 18px;
+}
+
+@media (max-width: 768px) {
+    .sidebar-close-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* ========== New Chat Button ========== */
 .new-chat-button {
     width: 100%;
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    background-color: #10f2f2;
-    color: rgb(0, 0, 0);
+    padding: 0.7rem 1rem;
+    margin: 1rem 0;
+    background: var(--accent-gradient);
+    color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: var(--radius-md);
     cursor: pointer;
-    font-weight: bold;
-    text-align: left;
-    transition: background-color 0.2s;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.01em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .new-chat-button:hover {
-    background-color: #0056b3;
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-glow);
+}
+
+.new-chat-button:active {
+    transform: translateY(0);
+}
+
+/* ========== Chat List ========== */
+.chat-history-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
 }
 
 .no-chats-msg {
-    font-size: 0.875rem;
-    color: #95a5a6;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-align: center;
+    margin-top: 2rem;
 }
 
+/* ========== Chat Item ========== */
 .chat-history-item {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 0.75rem;
-    margin-bottom: 0.75rem;
-    background-color: #34495e;
-    border-radius: 4px;
+    padding: 0.65rem 0.75rem;
+    background: transparent;
+    border-radius: var(--radius-sm);
     cursor: pointer;
-    font-size: 0.9rem;
-    transition: background-color 0.2s;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    position: relative;
 }
 
 .chat-history-item:hover {
-    background-color: #3b536a;
+    background: var(--bg-glass-light);
+    color: var(--text-primary);
 }
 
 .chat-history-item.active {
-    background-color: #007bff; /* Active highlight color */
-    border-left: 4px solid #80bdff;
+    background: rgba(0, 210, 255, 0.08);
+    color: var(--text-primary);
+    border-color: var(--border-accent);
+    border-left: 3px solid var(--accent-cyan);
 }
 
+/* ========== Chat Title ========== */
 .chat-title-text {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    flex: 1; /* Pushes the delete icon to the right */
+    flex: 1;
     padding-right: 0.5rem;
 }
 
+/* ========== Delete Icon ========== */
 .delete-icon {
     display: flex;
     align-items: center;
-    color: #e74c3c;
+    color: var(--text-muted);
+    opacity: 0;
+    transition: opacity 0.2s, color 0.2s;
+    flex-shrink: 0;
+    padding: 2px;
+    border-radius: 4px;
+}
+
+.chat-history-item:hover .delete-icon {
     opacity: 0.7;
-    transition:
-        opacity 0.2s,
-        color 0.2s;
 }
 
 .delete-icon:hover {
-    opacity: 1;
-    color: #ff6b6b;
+    opacity: 1 !important;
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
 }

@@ -1,25 +1,30 @@
+/* ========== Message Bubble Base ========== */
 .message-bubble {
-    max-width: 75%;
+    max-width: 78%;
     padding: 1.25rem 1.5rem;
-    border-radius: 12px;
-    line-height: 1.6;
+    border-radius: var(--radius-lg);
+    line-height: 1.7;
     text-align: left;
+    animation: slideUp 0.35s ease;
 }
 
+/* ========== User Message ========== */
 .message-user {
     align-self: flex-end;
-    background-color: #007bff;
-    color: white;
+    background: rgba(0, 210, 255, 0.1);
+    border: 1px solid rgba(0, 210, 255, 0.15);
+    color: var(--text-primary);
 }
 
+/* ========== Assistant Message ========== */
 .message-assistant {
     align-self: flex-start;
-    background-color: white;
-    color: #333;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
 }
 
+/* ========== Content Wrappers ========== */
 .user-content {
     white-space: pre-wrap;
 }
@@ -28,26 +33,113 @@
     /* Allow ReactMarkdown to naturally layout its inner HTML */
 }
 
-.assistant-content h1, 
-.assistant-content h2, 
+/* ========== Markdown Typography ========== */
+.assistant-content h1,
+.assistant-content h2,
 .assistant-content h3 {
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
     margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    font-weight: 600;
 }
+
+.assistant-content h1 { font-size: 1.3rem; }
+.assistant-content h2 { font-size: 1.15rem; }
+.assistant-content h3 { font-size: 1.05rem; }
 
 .assistant-content p {
     margin-top: 0;
     margin-bottom: 0.75rem;
+    color: var(--text-secondary);
 }
 
 .assistant-content p:last-child {
     margin-bottom: 0;
 }
 
-.assistant-content ul, 
+.assistant-content strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.assistant-content ul,
 .assistant-content ol {
     margin-top: 0;
     margin-bottom: 1rem;
     padding-left: 1.5rem;
+    color: var(--text-secondary);
 }
 
+.assistant-content li {
+    margin-bottom: 0.25rem;
+}
+
+.assistant-content a {
+    color: var(--accent-cyan);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+}
+
+.assistant-content a:hover {
+    border-bottom-color: var(--accent-cyan);
+}
+
+/* ========== Code Block Wrapper ========== */
+.code-block-wrapper {
+    position: relative;
+    margin: 0.75rem 0;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: 1px solid var(--border-subtle);
+}
+
+.code-block-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.45rem 1rem;
+    background: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+.code-block-lang {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.copy-btn {
+    padding: 0.2rem 0.6rem;
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    font-size: 0.72rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Outfit', sans-serif;
+}
+
+.copy-btn:hover {
+    color: var(--accent-cyan);
+    border-color: var(--border-accent);
+    background: rgba(0, 210, 255, 0.05);
+}
+
+.copy-btn.copied {
+    color: #34d399;
+    border-color: rgba(52, 211, 153, 0.3);
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 768px) {
+    .message-bubble {
+        max-width: 92%;
+        padding: 1rem 1.15rem;
+    }
+}

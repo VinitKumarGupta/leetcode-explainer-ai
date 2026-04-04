@@ -1,6 +1,73 @@
 .chat-container {
     display: flex;
     height: 100vh;
-    font-family: sans-serif;
-    background-color: #f4f4f9;
+    background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+/* ========== Mobile Hamburger ========== */
+.mobile-menu-btn {
+    display: none;
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 1000;
+    background: var(--bg-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all 0.25s ease;
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-menu-btn:hover {
+    background: rgba(0, 210, 255, 0.1);
+    border-color: var(--border-accent);
+}
+
+.mobile-menu-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* ========== Mobile Overlay ========== */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(4px);
+    z-index: 998;
+    animation: fadeIn 0.2s ease;
+}
+
+/* ========== Responsive ========== */
+@media (max-width: 768px) {
+    .mobile-menu-btn {
+        display: flex;
+    }
+
+    .sidebar-overlay.active {
+        display: block;
+    }
+
+    .chat-container .sidebar {
+        position: fixed;
+        left: -280px;
+        top: 0;
+        bottom: 0;
+        z-index: 999;
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .chat-container .sidebar.open {
+        left: 0;
+    }
 }

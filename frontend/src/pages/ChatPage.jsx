@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import api from "../services/api";
 import Sidebar from "../components/Sidebar";
 import ChatWindow from "../components/ChatWindow";
@@ -8,8 +8,9 @@ const ChatPage = () => {
     const [chats, setChats] = useState([]);
     const [activeChat, setActiveChat] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
-    useEffect(() => {
+    React.useEffect(() => {
         const fetchChats = async () => {
             try {
                 const response = await api.get("/chat/all");
@@ -49,6 +50,11 @@ const ChatPage = () => {
         setActiveChat(null);
     };
 
+    const handleSelectChat = (chat) => {
+        setActiveChat(chat);
+        setSidebarOpen(false);
+    };
+
     const handleDeleteChat = async (chatId) => {
         try {
             await api.delete(`/chat/${chatId}`);
@@ -63,12 +69,31 @@ const ChatPage = () => {
 
     return (
         <div className="chat-container">
+            {/* Mobile hamburger button */}
+            <button
+                className="mobile-menu-btn"
+                onClick={() => setSidebarOpen(true)}
+                aria-label="Open sidebar"
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+            </button>
+
+            {/* Mobile overlay */}
+            <div
+                className={`sidebar-overlay ${sidebarOpen ? "active" : ""}`}
+                onClick={() => setSidebarOpen(false)}
+            />
+
             <Sidebar 
                 chats={chats} 
                 activeChat={activeChat}
-                onSelectChat={setActiveChat} 
+                onSelectChat={handleSelectChat} 
                 onNewChat={handleNewChat} 
                 onDeleteChat={handleDeleteChat}
+                isOpen={sidebarOpen}
+                onClose={() => setSidebarOpen(false)}
             />
             <ChatWindow 
                 activeChat={activeChat} 
