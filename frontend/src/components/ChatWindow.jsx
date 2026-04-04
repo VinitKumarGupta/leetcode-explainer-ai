@@ -28,7 +28,7 @@ const ChatWindow = ({ activeChat, isLoading, onSend }) => {
                 ) : (
                     <div className="welcome-message">
                         <h2 className="brand-gradient-text">Explaina</h2>
-                        <p>Paste any DSA or LeetCode problem below and get a step-by-step explanation with code in your preferred language.</p>
+                        <p>Paste any DSA or competitive programming problem below and get a step-by-step explanation with code in your preferred language.</p>
                     </div>
                 )}
                 
@@ -49,7 +49,7 @@ const ChatWindow = ({ activeChat, isLoading, onSend }) => {
                     <textarea
                         className="chat-input"
                         rows="3"
-                        placeholder="Paste your LeetCode problem or link here..."
+                        placeholder="Paste your problem statement here..."
                         value={problemText}
                         onChange={(e) => setProblemText(e.target.value)}
                         onKeyDown={handleKeyDown}

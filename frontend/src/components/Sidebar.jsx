@@ -13,7 +13,7 @@ const Sidebar = ({
     return (
         <div className={`sidebar ${isOpen ? "open" : ""}`}>
             <div className="sidebar-header">
-                <h2 className="brand-gradient-text">History</h2>
+                <h2 className="brand-gradient-text">Explaina</h2>
                 <button
                     className="sidebar-close-btn"
                     onClick={onClose}
@@ -92,6 +92,16 @@ const Sidebar = ({
                         </span>
                     </div>
                 ))}
+            </div>
+            <div className="sidebar-footer">
+                Made with 💟 by{" "}
+                <a
+                    href="https://github.com/VinitKumarGupta"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    Vinit Gupta
+                </a>
             </div>
         </div>
     );
