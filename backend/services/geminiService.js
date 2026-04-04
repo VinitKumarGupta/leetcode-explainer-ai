@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const generateExplanation = async (problemText) => {
+export const generateExplanation = async (problemText, language = "Python") => {
     try {
         const apiKey = process.env.GEMINI_API_KEY;
 
@@ -13,30 +13,24 @@ export const generateExplanation = async (problemText) => {
         const prompt = `You are an expert Data Structures and Algorithms tutor helping students understand coding interview problems.
 
 Behavior:
-If this is the first message or a new problem, provide a structured explanation:
+Provide a strictly structured explanation for the problem using exactly this format:
 1. Intuition
 2. Brute force approach
 3. Optimized approach
 4. Time complexity
 5. Space complexity
 6. Edge cases
-7. Related topics
+7. Code Implementation in ${language}
+8. Related topics
 
-If this is a follow-up, answer conversationally but stay focused on DSA learning.
-
-Allowed topics:
-- algorithms
-- data structures
-- complexity analysis
-- problem solving
-- coding interview strategies
-
-If the question is unrelated to DSA, you must respond EXACTLY with:
-"This assistant focuses on Data Structures and Algorithms problems. Please ask something related to coding interviews."
+CRITICAL INSTRUCTIONS:
+- You are a one-shot reference tool. DO NOT add conversational filler, follow-up questions, or invites to continue the conversation at the end (e.g., do not say "Let me know if you have questions" or "Would you like me to clarify?"). 
+- Return ONLY the structured explanation.
+- If the text provided by the user is completely unrelated to coding/DSA, respond EXACTLY with: "This assistant focuses on Data Structures and Algorithms problems. Please ask something related to coding interviews."
 
 Keep answers clear and educational.
 
-User Input:
+The Problem:
 ${problemText}`;
 
         const MODEL = "gemini-2.5-flash";

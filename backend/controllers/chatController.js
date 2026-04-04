@@ -3,7 +3,7 @@ import { generateExplanation } from "../services/geminiService.js";
 
 export const createChat = async (req, res) => {
     try {
-        const { problemText } = req.body;
+        const { problemText, language } = req.body;
 
         // 1. Validate problemText exists
         if (!problemText) {
@@ -11,7 +11,7 @@ export const createChat = async (req, res) => {
         }
 
         // 2. Call generateExplanation from Gemini API
-        const explanation = await generateExplanation(problemText);
+        const explanation = await generateExplanation(problemText, language);
 
         // 3. Create new Chat document
         const newChat = new Chat({
@@ -46,6 +46,22 @@ export const getAllChats = async (req, res) => {
         res.status(200).json(chats);
     } catch (error) {
         console.error("Get All Chats Error:", error);
+        res.status(500).json({ message: "Server Error", error: error.message });
+    }
+};
+
+export const deleteChat = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deletedChat = await Chat.findOneAndDelete({ _id: id, userId: req.userId });
+        
+        if (!deletedChat) {
+            return res.status(404).json({ message: "Chat not found or unauthorized to delete" });
+        }
+        
+        res.status(200).json({ message: "Chat deleted successfully" });
+    } catch (error) {
+        console.error("Delete Chat Error:", error);
         res.status(500).json({ message: "Server Error", error: error.message });
     }
 };
