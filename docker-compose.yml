@@ -1,5 +1,6 @@
 services:
   backend:
+    image: ghcr.io/vinitkumargupta/leetcode-backend:latest
     build:
       context: ./backend
     ports:
@@ -12,6 +13,7 @@ services:
     restart: always
 
   frontend:
+    image: ghcr.io/vinitkumargupta/leetcode-frontend:latest
     build:
       context: ./frontend
     ports:
@@ -19,3 +21,4 @@ services:
     depends_on:
       - backend
     restart: always
+
