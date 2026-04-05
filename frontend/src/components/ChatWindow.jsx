@@ -6,6 +6,12 @@ const ChatWindow = ({ activeChat, isLoading, onSend }) => {
     const [problemText, setProblemText] = useState("");
     const [language, setLanguage] = useState("Python");
 
+    React.useEffect(() => {
+        if (!activeChat) {
+            setProblemText("");
+        }
+    }, [activeChat]);
+
     const handleSend = () => {
         if (!problemText.trim()) return;
         onSend(problemText, language);
@@ -57,7 +63,7 @@ const ChatWindow = ({ activeChat, isLoading, onSend }) => {
                     <textarea
                         className="chat-input"
                         rows="3"
-                        placeholder="Paste your LeetCode problem or link here..."
+                        placeholder="Provide a problem title, number, or full description for a precise explanation. Note: AI-generated responses may contain inaccuracies."
                         value={problemText}
                         onChange={(e) => setProblemText(e.target.value)}
                         onKeyDown={handleKeyDown}
