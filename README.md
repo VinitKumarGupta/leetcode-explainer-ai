@@ -51,7 +51,7 @@ Every response follows the exact same battle-tested format:
 8. Related Topics     → DSA patterns to study next
 ```
 
-No hallucinated follow-ups. No filler. No "Happy coding!" at the end.
+No follow-ups. No filler.
 
 ---
 
@@ -137,7 +137,7 @@ explaina/
 
 - **Node.js** v18+
 - **MongoDB** (local via Compass or remote via Atlas)
-- **Groq API Key** — Get one for free at [console.groq.com](https://console.groq.com)
+- **Groq API Key**: Get one for free at [console.groq.com](https://console.groq.com)
 
 ### 1. Clone the Repository
 
@@ -188,30 +188,6 @@ npm run dev
 ### 5. Open in Browser
 
 Navigate to [http://localhost:5173](http://localhost:5173) — create an account and start exploring!
-
----
-
-## How It Works
-
-```
-┌──────────────┐     ┌──────────────┐     ┌──────────────┐
-│   Frontend   │────▶│   Backend    │────▶│   Groq API   │
-│  React/Vite  │     │ Express/Node │     │ Llama 3.3 70B│
-│              │◀────│              │◀────│              │
-└──────────────┘     └──────┬───────┘     └──────────────┘
-                           │
-                     ┌─────▼──────┐
-                     │  MongoDB   │
-                     │ Users/Chats│
-                     └────────────┘
-```
-
-1. User types a problem (number, title, or description) and selects a language
-2. Frontend sends the request to the Express backend with JWT auth
-3. Backend constructs a specialized DSA-tutor prompt and sends it to Groq
-4. Llama 3.3 70B generates a structured 8-section explanation
-5. Response is stored in MongoDB and rendered with full markdown support
-6. User can revisit, rename, or delete any past explanation
 
 ---
 
