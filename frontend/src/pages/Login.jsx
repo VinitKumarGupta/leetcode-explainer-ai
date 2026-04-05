@@ -19,10 +19,11 @@ const Login = () => {
                 password,
             });
 
-            const { token } = response.data;
+            const { token, email: userEmail } = response.data;
 
-            // Store token for future requests
+            // Store token and email for future requests
             localStorage.setItem("token", token);
+            localStorage.setItem("userEmail", userEmail);
 
             // Redirect to chat interface
             navigate("/chat");

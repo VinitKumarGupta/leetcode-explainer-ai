@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import Sidebar from "../components/Sidebar";
 import ChatWindow from "../components/ChatWindow";
@@ -9,8 +10,17 @@ const ChatPage = () => {
     const [activeChat, setActiveChat] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const navigate = useNavigate();
 
-    React.useEffect(() => {
+    const userEmail = localStorage.getItem("userEmail") || "User";
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("userEmail");
+        navigate("/login");
+    };
+
+    useEffect(() => {
         const fetchChats = async () => {
             try {
                 const response = await api.get("/chat/all");
@@ -126,6 +136,8 @@ const ChatPage = () => {
                 isOpen={sidebarOpen}
                 onClose={() => setSidebarOpen(false)}
                 isLoading={isLoading}
+                userEmail={userEmail}
+                onLogout={handleLogout}
             />
             <ChatWindow
                 activeChat={activeChat}

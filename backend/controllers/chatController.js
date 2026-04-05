@@ -1,5 +1,5 @@
 import Chat from "../models/Chat.js";
-import { generateExplanation } from "../services/geminiService.js";
+import { generateExplanation } from "../services/aiService.js";
 
 export const createChat = async (req, res) => {
     try {

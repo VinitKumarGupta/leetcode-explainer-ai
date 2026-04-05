@@ -10,8 +10,8 @@
 .mobile-menu-btn {
     display: none;
     position: fixed;
-    top: 1rem;
-    left: 1rem;
+    top: 1.25rem;
+    left: 1.25rem;
     z-index: 1000;
     background: var(--bg-glass);
     backdrop-filter: blur(12px);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Sidebar.css";
 
 const Sidebar = ({
@@ -11,9 +11,13 @@ const Sidebar = ({
     isOpen,
     onClose,
     isLoading,
+    userEmail,
+    onLogout,
 }) => {
     const [editingChatId, setEditingChatId] = useState(null);
     const [editTitle, setEditTitle] = useState("");
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const menuRef = useRef(null);
 
     const handleEditClick = (e, chat) => {
         e.stopPropagation();
@@ -35,6 +39,17 @@ const Sidebar = ({
             setEditingChatId(null);
         }
     };
+
+    // Close dropup when clicking outside
+    useEffect(() => {
+        const handleClickOutside = (e) => {
+            if (menuRef.current && !menuRef.current.contains(e.target)) {
+                setIsMenuOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => document.removeEventListener("mousedown", handleClickOutside);
+    }, []);
 
     return (
         <div className={`sidebar ${isOpen ? "open" : ""}`}>
@@ -85,7 +100,7 @@ const Sidebar = ({
             </button>
             <div className="chat-history-list">
                 {chats.length === 0 && (
-                    <p className="no-chats-msg">No past chats yet.</p>
+                    <p className="no-chats-msg">History</p>
                 )}
 
                 {chats.map((chat) => (
@@ -162,6 +177,33 @@ const Sidebar = ({
                     </div>
                 ))}
             </div>
+
+            {/* Account Menu - Moved to Sidebar */}
+            <div className="sidebar-account-container" ref={menuRef}>
+                {isMenuOpen && (
+                    <div className="sidebar-account-dropup">
+                        <button className="sidebar-dropup-item sidebar-logout-item" onClick={onLogout}>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.8} stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75" />
+                            </svg>
+                            Log out
+                        </button>
+                    </div>
+                )}
+                <button
+                    className="sidebar-account-btn"
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                >
+                    <div className="sidebar-account-avatar">
+                        {(userEmail || "").charAt(0).toUpperCase()}
+                    </div>
+                    <span className="sidebar-account-email">{userEmail}</span>
+                    <svg className={`sidebar-account-chevron ${isMenuOpen ? "open" : ""}`} xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+                    </svg>
+                </button>
+            </div>
+
             <div className="sidebar-footer">
                 Made with <span className="heart-glow">❤️</span> by{" "}
                 <a

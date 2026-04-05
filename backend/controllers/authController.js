@@ -70,9 +70,10 @@ export const loginUser = async (req, res) => {
             expiresIn: "7d",
         });
 
-        // 5. Return JSON with token
+        // 5. Return JSON with token and email
         res.status(200).json({
             token,
+            email: user.email,
         });
     } catch (error) {
         res.status(500).json({ message: "Server Error", error: error.message });
