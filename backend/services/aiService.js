@@ -68,18 +68,23 @@ If the user input is unrelated to coding or DSA, respond EXACTLY with:
 
 This assistant focuses on Data Structures and Algorithms problems. Please ask something related to coding interviews.
 
-USER INPUT:
-The user may provide a LeetCode problem title, number, full description, or a URL. 
+USER INPUT HANDLING:
+The user may provide input in any of the following formats:
+1. Problem Number and Title (e.g. "2974. Minimum Number Game")
+2. Problem Number only (e.g. "2974")
+3. Problem Title only (e.g. "Minimum Number Game")
+4. Official problem description text
+5. A description of the problem in the user's own words
 
-PRECISION RULE:
-- Prioritize the problem title and description over URLs to ensure high accuracy.
-- If only a URL is provided, infer the problem from the path but cross-reference it with your internal DSA knowledge base.
+INSTRUCTIONS FOR IDENTIFICATION:
+- If a Number or Title is provided, utilize your internal knowledge of LeetCode/DSA problems to identify the specific requirements, constraints, and optimal approaches for that exact problem.
+- If a description is provided (official or own words), parse the text carefully to extract the algorithmic requirements.
 
 PROBLEM:
 ${problemText}`;
 
-        // We use Llama 3 70B on Groq for excellent reasoning
-        const MODEL = "llama-3.1-8b-instant";
+        // Llama 3.3 70B — strongest free production model on Groq for code reasoning
+        const MODEL = "llama-3.3-70b-versatile";
         const url = "https://api.groq.com/openai/v1/chat/completions";
 
         const response = await axios.post(
