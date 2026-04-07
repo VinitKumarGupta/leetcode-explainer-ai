@@ -15,8 +15,15 @@ const userSchema = new mongoose.Schema(
         },
         password: {
             type: String,
-            required: [true, "Password is required"],
+            required: function () {
+                return !this.googleId;
+            },
             minlength: [8, "Password must be at least 8 characters long"],
+        },
+        googleId: {
+            type: String,
+            unique: true,
+            sparse: true, // Only if present
         },
     },
     {

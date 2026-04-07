@@ -79,3 +79,24 @@ export const loginUser = async (req, res) => {
         res.status(500).json({ message: "Server Error", error: error.message });
     }
 };
+
+export const googleAuthCallback = async (req, res) => {
+    try {
+        if (!req.user) {
+            return res.redirect(`${process.env.FRONTEND_URL}/login?error=Google auth failed`);
+        }
+
+        // Create JWT token
+        const token = jwt.sign({ userId: req.user._id }, process.env.JWT_SECRET, {
+            expiresIn: "7d",
+        });
+
+        // Redirect to frontend with token in URL
+        // We'll use this token on the frontend to log the user in
+        const frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
+        res.redirect(`${frontendUrl}/login?token=${token}&email=${req.user.email}`);
+    } catch (error) {
+        console.error("Google Auth Callback Error:", error);
+        res.redirect(`${process.env.FRONTEND_URL}/login?error=Server error`);
+    }
+};
