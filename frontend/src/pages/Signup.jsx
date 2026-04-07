@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { Eye, EyeOff } from "lucide-react";
 import api from "../services/api";
 import "./Signup.css";
 
 const Signup = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
@@ -24,7 +26,8 @@ const Signup = () => {
         } catch (err) {
             console.error("Signup Error:", err);
             setError(
-                err.response?.data?.message || "Something went wrong during signup."
+                err.response?.data?.message ||
+                    "Something went wrong during signup.",
             );
         }
     };
@@ -32,16 +35,10 @@ const Signup = () => {
     return (
         <div className="signup-container">
             <div className="signup-card">
-                <h2 className="signup-title brand-gradient-text">
-                    Explaina
-                </h2>
+                <h2 className="signup-title brand-gradient-text">Explaina</h2>
                 <p className="signup-subtitle">Create your account</p>
-                
-                {error && (
-                    <div className="signup-error">
-                        {error}
-                    </div>
-                )}
+
+                {error && <div className="signup-error">{error}</div>}
 
                 <form onSubmit={handleSubmit} className="signup-form">
                     <div className="form-group">
@@ -57,13 +54,28 @@ const Signup = () => {
 
                     <div className="form-group">
                         <label>Password</label>
-                        <input
-                            type="password"
-                            placeholder="Create a password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            required
-                        />
+                        <div className="password-input-wrapper">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                placeholder="Create a password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                minLength={8}
+                                required
+                            />
+                            <button
+                                type="button"
+                                className="password-toggle"
+                                onClick={() => setShowPassword(!showPassword)}
+                                tabIndex="-1"
+                            >
+                                {showPassword ? (
+                                    <EyeOff size={18} />
+                                ) : (
+                                    <Eye size={18} />
+                                )}
+                            </button>
+                        </div>
                     </div>
 
                     <button type="submit" className="signup-button">
@@ -72,7 +84,8 @@ const Signup = () => {
                 </form>
 
                 <p className="signup-footer">
-                    Already have an account? <Link to="/login">Login here</Link>
+                    Already have an account? <br />
+                    <Link to="/login">Login here</Link>
                 </p>
             </div>
         </div>
