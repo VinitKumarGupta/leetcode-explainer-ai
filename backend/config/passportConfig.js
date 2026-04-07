@@ -1,6 +1,4 @@
-import dotenv from "dotenv";
-
-dotenv.config({ path: "../.env" });
+// Environment variables loaded by server.js before this module is imported.
 
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";

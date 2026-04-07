@@ -3,8 +3,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 import session from "express-session";
 
-// .env must be loaded before passport.js is imported
-dotenv.config({ path: "../.env" });
+// Load .env for local development. In Docker, env vars are injected by the container.
+dotenv.config({ path: "../.env" });  // works when running from /backend locally
+dotenv.config();                     // fallback: looks for .env in cwd
 
 import connectDB from "./config/db.js";
 import passport from "./config/passportConfig.js";
