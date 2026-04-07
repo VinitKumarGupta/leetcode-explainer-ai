@@ -61,9 +61,8 @@ const Login = () => {
     };
 
     const handleGoogleLogin = () => {
-        const backendUrl =
-            import.meta.env.VITE_API_URL || "http://localhost:5000";
-        window.location.href = `${backendUrl}/api/auth/google`;
+        // Relative URL works because Nginx (prod) and Vite (dev) both proxy /api to the backend
+        window.location.href = "/api/auth/google";
     };
 
     return (
