@@ -1,11 +1,15 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import session from "express-session";
+
+// .env must be loaded before passport.js is imported
+dotenv.config({ path: "../.env" });
+
 import connectDB from "./config/db.js";
+import passport from "./config/passportConfig.js";
 import authRoutes from "./routes/authRoutes.js";
 import chatRoutes from "./routes/chatRoutes.js";
-
-dotenv.config({ path: "../.env" });
 
 connectDB();
 
@@ -13,6 +17,19 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+// Session middleware (required for Passport)
+app.use(
+    session({
+        secret: process.env.JWT_SECRET || "secret",
+        resave: false,
+        saveUninitialized: false,
+    }),
+);
+
+// Initialize Passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Routes all requests to /api/auth/* to the authRoutes module
 app.use("/api/auth", authRoutes);
