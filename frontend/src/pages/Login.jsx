@@ -22,6 +22,8 @@ const Login = () => {
         if (token && emailParam) {
             localStorage.setItem("token", token);
             localStorage.setItem("userEmail", emailParam);
+            // Clean URL params to prevent re-processing on re-render
+            window.history.replaceState({}, document.title, "/login");
             navigate("/chat");
         } else if (errorParam) {
             setError(errorParam);
