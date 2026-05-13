@@ -22,7 +22,16 @@ const App = () => {
         <Router>
             <Routes>
                 {/* Default route strictly redirects to signup */}
-                <Route path="/" element={<Navigate to="/signup" replace />} />
+                <Route
+                    path="/"
+                    element={
+                        localStorage.getItem("token") ? (
+                            <Navigate to="/chat" replace />
+                        ) : (
+                            <Navigate to="/signup" replace />
+                        )
+                    }
+                />
 
                 {/* Application Pages */}
                 <Route path="/login" element={<Login />} />

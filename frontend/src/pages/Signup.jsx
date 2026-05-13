@@ -11,6 +11,12 @@ const Signup = () => {
     const [error, setError] = useState("");
     const navigate = useNavigate();
 
+    React.useEffect(() => {
+        if (localStorage.getItem("token")) {
+            navigate("/chat");
+        }
+    }, [navigate]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(""); // Clear previous errors
