@@ -13,6 +13,11 @@ const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        if (localStorage.getItem("token")) {
+            navigate("/chat");
+            return;
+        }
+
         // Check for token and email in URL (after Google redirect)
         const params = new URLSearchParams(window.location.search);
         const token = params.get("token");
@@ -110,7 +115,11 @@ const Login = () => {
                         </div>
                     </div>
 
-                    <button type="submit" className="login-button" disabled={isLoading}>
+                    <button
+                        type="submit"
+                        className="login-button"
+                        disabled={isLoading}
+                    >
                         {isLoading ? "Signing In..." : "Sign In"}
                     </button>
                 </form>
