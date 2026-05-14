@@ -17,7 +17,6 @@ const Login = () => {
             navigate("/chat");
             return;
         }
-
         // Check for token and email in URL (after Google redirect)
         const params = new URLSearchParams(window.location.search);
         const token = params.get("token");
