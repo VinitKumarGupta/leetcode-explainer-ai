@@ -43,13 +43,15 @@ Provide clean, leetcode-format code inside EXACTLY ONE markdown code block.
 Do NOT include multiple code blocks.
 
 ## Related Topics
-List 3-6 relevant DSA topics or patterns.
+List 3-6 relevant DSA topics or patterns. (CRITICAL: Ensure the preceding code block is CLOSED with \`\`\` before this header).
 
 CRITICAL RULES:
 - Return ONLY the structured explanation.
 - Do NOT include conversational text, greetings, or follow-up questions.
 - Do NOT include any text before the first section header.
 - Do NOT include any text after the Related Topics section.
+- ALWAYS close the markdown code block with \`\`\` on its own line before starting the "## Related Topics" section.
+- Ensure a blank line exists between the closing \`\`\` and the "## Related Topics" header.
 - Do not assume constraints if not provided.
 - If multiple optimal approaches exist, present the most commonly expected interview solution only.
 - Keep explanations concise but complete.
