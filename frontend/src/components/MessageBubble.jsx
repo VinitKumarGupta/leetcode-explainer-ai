@@ -19,12 +19,32 @@ SyntaxHighlighter.registerLanguage("go", go);
 const CodeBlock = ({ inline, className, children, ...props }) => {
     const [isCopied, setIsCopied] = useState(false);
     const match = /language-(\w+)/.exec(className || "");
-    const codeString = String(children).replace(/\n$/, "");
+    const codeString = Array.isArray(children)
+        ? children.join("")
+        : String(children).replace(/\n$/, "");
 
-    const handleCopy = () => {
-        navigator.clipboard.writeText(codeString);
-        setIsCopied(true);
-        setTimeout(() => setIsCopied(false), 1500);
+    const handleCopy = async () => {
+        try {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(codeString);
+            } else {
+                // Fallback for non-secure contexts or older browsers
+                const textArea = document.createElement("textarea");
+                textArea.value = codeString;
+                textArea.style.position = "fixed";
+                textArea.style.left = "-9999px";
+                textArea.style.top = "-9999px";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                document.execCommand("copy");
+                textArea.remove();
+            }
+            setIsCopied(true);
+            setTimeout(() => setIsCopied(false), 2000);
+        } catch (err) {
+            console.error("Failed to copy code: ", err);
+        }
     };
 
     if (!inline && match) {
