@@ -23,7 +23,7 @@ General-purpose conversational AI models typically return unpredictable formats,
 
 ```
                        +-------------------------+
-                       |   Client (React / SPA)  |
+                       |       Client (SPA)      |
                        +------------+------------+
                                     |
                                HTTP | Port 80
