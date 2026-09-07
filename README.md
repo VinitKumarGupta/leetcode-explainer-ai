@@ -11,7 +11,7 @@ General-purpose conversational AI models typically return unpredictable formats,
 1. **Intuition**: High-level concept and logic behind the solution.
 2. **Brute Force Approach**: Naive baseline and its pitfalls.
 3. **Optimized Approach**: Optimal algorithmic strategy and design pattern (e.g., Two Pointers, Sliding Window, DP).
-4. **Time Complexity**: Plain-text asymptotic analysis ($O(n)$, $O(n \log n)$) without rendering bugs.
+4. **Time Complexity**: Plain-text asymptotic analysis $(O(n), O(n \log n))$ without rendering bugs.
 5. **Space Complexity**: Auxiliary memory requirements.
 6. **Edge Cases**: Crucial boundary conditions and constraints.
 7. **Code Implementation**: Clean, runnable code in Python, JavaScript, Java, C++, or Go.
