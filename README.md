@@ -1,214 +1,204 @@
-<p align="center">
-  <img src="frontend/public/explaina-banner.png" alt="Explaina Banner" width="100%" />
-</p>
+# Explaina
 
-<h1 align="center">Explaina</h1>
-
-<p align="center">
-  <strong>AI-Powered DSA Problem Explainer — Built for Interview Prep, Not Conversations</strong>
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white" alt="React" />
-  <img src="https://img.shields.io/badge/Node.js-Express-339933?logo=node.js&logoColor=white" alt="Node.js" />
-  <img src="https://img.shields.io/badge/MongoDB-Mongoose-47A248?logo=mongodb&logoColor=white" alt="MongoDB" />
-  <img src="https://img.shields.io/badge/AI-Llama_3.3_70B-FF6F00?logo=meta&logoColor=white" alt="Llama 3.3" />
-  <img src="https://img.shields.io/badge/Groq-Inference-000000?logo=groq&logoColor=white" alt="Groq" />
-</p>
+An AI-assisted technical interview preparation tool that converts coding and algorithm problems into structured, interview-ready breakdowns.
 
 ---
 
-## 🤔 Why Explaina Over Any AI Chatbot?
+## Overview
 
-You might ask — _"Why not just ask ChatGPT or Gemini?"_ Here's why Explaina exists:
+General-purpose conversational AI models typically return unpredictable formats, mix boilerplate code, or provide conversational filler. Explaina enforces a deterministic, single-turn prompt pipeline that parses Data Structures and Algorithms (DSA) problems and produces an 8-part breakdown:
 
-| Feature                 | Generic AI Chatbot                                          | Explaina                                                                   |
-| ----------------------- | ----------------------------------------------------------- | -------------------------------------------------------------------------- |
-| **Output Format**       | Varies wildly between sessions                              | Consistent, structured 8-section format every single time                  |
-| **Interview Focus**     | Gives verbose, textbook-style answers                       | Gives interview-ready breakdowns: Intuition → Brute Force → Optimal → Code |
-| **Code Quality**        | May include boilerplate, comments, or non-LeetCode patterns | Clean, LeetCode-format code ready to submit                                |
-| **Input Flexibility**   | Requires well-formed prompts                                | Just type `"1. Two Sum"` or paste the full description — it figures it out |
-| **Complexity Analysis** | Often uses LaTeX ($O(n)$) that doesn't render               | Always plain-text — `O(n)`, `O(n log n)` — renders perfectly               |
-| **Conversation Drift**  | Adds "Let me know if you need more help!" filler            | Zero filler. Pure technical content. One-shot reference tool.              |
-| **Edge Cases**          | Usually skipped                                             | Dedicated section with relevant corner cases                               |
-| **Dedicated UI**        | Chat interface built for general Q&A                        | Purpose-built interface with chat history, language selector, and sidebar  |
+1. **Intuition**: High-level concept and logic behind the solution.
+2. **Brute Force Approach**: Naive baseline and its pitfalls.
+3. **Optimized Approach**: Optimal algorithmic strategy and design pattern (e.g., Two Pointers, Sliding Window, DP).
+4. **Time Complexity**: Plain-text asymptotic analysis ($O(n)$, $O(n \log n)$) without rendering bugs.
+5. **Space Complexity**: Auxiliary memory requirements.
+6. **Edge Cases**: Crucial boundary conditions and constraints.
+7. **Code Implementation**: Clean, runnable code in Python, JavaScript, Java, C++, or Go.
+8. **Related Topics**: Core DSA patterns and follow-up problem classifications.
 
-### The Core Philosophy
+---
 
-> **Explaina is not a chatbot. It's a reference tool.**  
-> You paste a problem. You get a structured, interview-grade explanation. That's it.
-
-Every response follows the exact same battle-tested format:
+## System Architecture
 
 ```
-1. Intuition          → Why does this approach work?
-2. Brute Force        → The naive solution
-3. Optimized Approach → The interview answer
-4. Time Complexity    → Plain-text Big-O analysis
-5. Space Complexity   → Auxiliary space only
-6. Edge Cases         → Relevant corner cases
-7. Code               → One clean, submittable code block
-8. Related Topics     → DSA patterns to study next
+                       +-------------------------+
+                       |   Client (React / SPA)  |
+                       +------------+------------+
+                                    |
+                               HTTP | Port 80
+                                    v
+                       +-------------------------+
+                       |   Nginx (Reverse Proxy) |
+                       +------------+------------+
+                                    |
+                         /api/*     | Internal Docker Bridge
+                                    v
+                       +-------------------------+
+                       |  Express.js API Server  |
+                       +------+-----------+------+
+                              |           |
+            Mongoose / TCP    |           | HTTPS / REST
+                              v           v
+            +--------------------+     +-----------------------+
+            |   MongoDB Atlas    |     |   Groq Inference API  |
+            +--------------------+     +-----------------------+
 ```
 
-No follow-ups. No filler.
+- **Frontend**: React 19 single-page application built with Vite, utilizing Tailwind CSS for layout, Axios for API calls, and Markdown syntax highlighting (`rehype-highlight`).
+- **Backend**: Node.js / Express REST API serving authentication and chat endpoints.
+- **Database**: MongoDB (Mongoose ODM) storing user profiles and query history.
+- **Authentication**: Dual authentication via JSON Web Tokens (JWT) with bcrypt password hashing, alongside Google OAuth 2.0 via Passport.js.
+- **Inference Pipeline**: LLM inference via Groq Cloud API with low-temperature configuration for deterministic outputs.
 
 ---
 
-## ✨ Features
-
-- **AI-Powered Explanations**: Powered by Meta's Llama 3.3 70B via Groq for fast, high-quality reasoning
-- **Multi-Format Input**: Accepts problem numbers, titles, full descriptions, or your own paraphrased explanations
-- **5 Language Support**: Get code in Python, JavaScript, Java, C++, or Go
-- **Chat History**: All past explanations are saved and organized in the sidebar
-- **Rename & Delete**: Manage your saved explanations with inline rename and delete
-- **Authentication**: Secure JWT-based signup/login with protected routes
-- **Glassmorphic UI**: Premium dark-mode interface with cyan-blue gradient accents
-- **Fully Responsive**: Works seamlessly on desktop and mobile devices
-- **Blazing Fast**: Groq's LPU inference delivers responses in seconds, not minutes
-
----
-
-## 🖥️ Tech Stack
-
-| Layer         | Technology                                                   |
-| ------------- | ------------------------------------------------------------ |
-| **Frontend**  | React 19, Vite, React Router, Axios                          |
-| **Backend**   | Node.js, Express 5, Mongoose                                 |
-| **Database**  | MongoDB (Local / Atlas)                                      |
-| **AI Engine** | Llama 3.3 70B via Groq Cloud API                             |
-| **Auth**      | JWT (JSON Web Tokens) + bcrypt                               |
-| **Design**    | Custom CSS with glassmorphism, Outfit & JetBrains Mono fonts |
-
----
-
-## 📁 Project Structure
+## Repository Structure
 
 ```
-explaina/
-├── .env                          # Environment variables (API keys, DB URI)
-├── .gitignore
+.
+├── .github/
+│   └── workflows/
+│       └── deploy.yml            # CI/CD pipeline targeting GHCR and AWS EC2
 ├── backend/
 │   ├── config/
-│   │   └── db.js                 # MongoDB connection
+│   │   ├── db.js                 # MongoDB connection handler
+│   │   └── passportConfig.js     # Google OAuth 2.0 Passport strategy
 │   ├── controllers/
-│   │   ├── authController.js     # Signup & Login logic
-│   │   └── chatController.js     # Chat CRUD operations
+│   │   ├── authController.js     # Signup, login, OAuth callback logic
+│   │   └── chatController.js     # CRUD operations for DSA explanations
 │   ├── middleware/
-│   │   └── authMiddleware.js     # JWT verification middleware
+│   │   └── authMiddleware.js     # JWT bearer token verification
 │   ├── models/
-│   │   ├── User.js               # User schema (email, password)
-│   │   └── Chat.js               # Chat schema (messages, title)
+│   │   ├── User.js               # User authentication schema
+│   │   └── Chat.js               # Chat history and explanation schema
 │   ├── routes/
-│   │   ├── authRoutes.js         # /api/auth/*
-│   │   └── chatRoutes.js         # /api/chat/*
+│   │   ├── authRoutes.js         # /api/auth routes
+│   │   └── chatRoutes.js         # /api/chat routes
 │   ├── services/
-│   │   └── aiService.js          # Groq API integration & prompt engine
-│   ├── server.js                 # Express app entry point
-│   └── package.json
+│   │   └── aiService.js          # Groq API client and structured prompt engine
+│   ├── Dockerfile                # Backend container specification
+│   ├── package.json
+│   └── server.js                 # Express server initialization
 ├── frontend/
-│   ├── public/
-│   │   └── explaina-banner.png
+│   ├── nginx.conf                # Nginx reverse proxy configuration
 │   ├── src/
-│   │   ├── components/
-│   │   │   ├── ChatWindow.jsx    # Main chat area with input
-│   │   │   ├── MessageBubble.jsx # Markdown-rendered message display
-│   │   │   └── Sidebar.jsx       # Chat history + account menu
-│   │   ├── pages/
-│   │   │   ├── ChatPage.jsx      # Protected chat interface
-│   │   │   ├── Login.jsx         # Login page
-│   │   │   └── Signup.jsx        # Signup page
-│   │   ├── services/
-│   │   │   └── api.js            # Axios instance with JWT interceptor
-│   │   ├── App.jsx               # Router with ProtectedRoute
-│   │   ├── index.css             # Design system tokens
-│   │   └── main.jsx              # React entry point
-│   ├── index.html
-│   ├── vite.config.js
+│   │   ├── components/           # UI components (ChatWindow, Sidebar, MessageBubble)
+│   │   ├── pages/                # App views (ChatPage, Login, Signup)
+│   │   └── services/api.js       # Axios client with auth interceptors
+│   ├── Dockerfile                # Multi-stage frontend build with Nginx
 │   └── package.json
+├── docker-compose.yml            # Multi-container orchestration specification
 └── README.md
 ```
 
 ---
 
-## 🚀 Getting Started
+## API Reference
+
+### Authentication
+
+| Method | Endpoint                    | Description                                              |
+| ------ | --------------------------- | -------------------------------------------------------- |
+| `POST` | `/api/auth/signup`          | Registers a new user (`email`, `password`).              |
+| `POST` | `/api/auth/login`           | Authenticates user credentials and returns a signed JWT. |
+| `GET`  | `/api/auth/google`          | Initiates Google OAuth 2.0 authentication flow.          |
+| `GET`  | `/api/auth/google/callback` | Google OAuth redirect callback handler.                  |
+
+### Chat & Explanations
+
+| Method   | Endpoint            | Description                                                  |
+| -------- | ------------------- | ------------------------------------------------------------ |
+| `POST`   | `/api/chat/create`  | Submits a DSA problem query and returns generated analysis.  |
+| `GET`    | `/api/chat/history` | Retrieves stored explanation history for authenticated user. |
+| `GET`    | `/api/chat/:id`     | Retrieves a specific explanation by ID.                      |
+| `PUT`    | `/api/chat/:id`     | Updates an explanation title.                                |
+| `DELETE` | `/api/chat/:id`     | Deletes an explanation record.                               |
+
+---
+
+## Getting Started
 
 ### Prerequisites
 
-- **Node.js** v18+
-- **MongoDB** (local via Compass or remote via Atlas)
-- **Groq API Key**: Get one for free at [console.groq.com](https://console.groq.com)
+- Node.js (v18 or higher)
+- MongoDB instance (Local or Atlas)
+- Groq API Key
+- Google OAuth credentials (optional, required for Google sign-in)
 
-### 1. Clone the Repository
+### Environment Variables
 
-```bash
-git clone https://github.com/VinitKumarGupta/leetcode-explainer-ai.git
-cd leetcode-explainer-ai
-```
-
-### 2. Set Up Environment Variables
-
-Create a `.env` file in the **project root**:
+Create a `.env` file in the project root:
 
 ```env
-MONGO_URI=mongodb://localhost:27017/explaina
-JWT_SECRET=your_jwt_secret_here
-MODEL_API_KEY=your_groq_api_key_here
 PORT=5000
+MONGO_URI=mongodb://localhost:27017/leetcode-explainer
+JWT_SECRET=your_jwt_secret_key
+MODEL_API_KEY=gsk_your_groq_api_key
+GROQ_MODEL=qwen/qwen3.8-27b
+
+# Google OAuth Credentials
+GOOGLE_CLIENT_ID=your_google_client_id
+GOOGLE_CLIENT_SECRET=your_google_client_secret
+GOOGLE_CALLBACK_URL=http://localhost:5000/api/auth/google/callback
+FRONTEND_URL=http://localhost:5173
 ```
 
-> **Note:** If using MongoDB Atlas, replace `MONGO_URI` with your Atlas connection string.
+### Local Development
 
-### 3. Install Dependencies
+1. **Install Dependencies**:
+
+    ```bash
+    # Install backend dependencies
+    cd backend
+    npm install
+
+    # Install frontend dependencies
+    cd ../frontend
+    npm install
+    ```
+
+2. **Run Services**:
+
+    Start backend server:
+
+    ```bash
+    cd backend
+    npm run dev
+    ```
+
+    Start frontend development server:
+
+    ```bash
+    cd frontend
+    npm run dev
+    ```
+
+3. **Access**:
+   Open `http://localhost:5173` in your browser.
+
+---
+
+## Production Deployment
+
+### Docker Compose
+
+The project includes container configurations for production deployment:
 
 ```bash
-# Backend
-cd backend
-npm install
-
-# Frontend
-cd ../frontend
-npm install
+docker compose up -d --build
 ```
 
-### 4. Run the Application
+This starts:
 
-Open **two terminals**:
+- `frontend`: Multi-stage build running Nginx on port `80`, handling client-side routing and proxying `/api/*` requests.
+- `backend`: Node.js container exposing internal port `5000`.
 
-```bash
-# Terminal 1 — Backend (Port 5000)
-cd backend
-npm run dev
+### CI/CD Pipeline
 
-# Terminal 2 — Frontend (Port 5173)
-cd frontend
-npm run dev
-```
+The GitHub Actions workflow (`.github/workflows/deploy.yml`) automates deployment on push to `deployment-v1`:
 
-### 5. Open in Browser
-
-Navigate to [http://localhost:5173](http://localhost:5173) — create an account and start exploring!
-
----
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to open an issue or submit a pull request.
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'feat: add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
----
-
-## 📜 License
-
-This project is open-source and available under the [MIT License](LICENSE).
-
----
-
-<p align="center">
-  Made with ❤️ by <a href="https://github.com/VinitKumarGupta">Vinit Gupta</a>
-</p>
+1. Builds backend and frontend container images.
+2. Pushes images to GitHub Container Registry (`ghcr.io`).
+3. Connects to the host server via SSH (`appleboy/ssh-action`).
+4. Injects secret values into the host environment, pulls updated container images, and executes `docker compose up -d`.
