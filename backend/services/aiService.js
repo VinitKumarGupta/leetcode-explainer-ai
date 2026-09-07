@@ -85,8 +85,8 @@ INSTRUCTIONS FOR IDENTIFICATION:
 PROBLEM:
 ${problemText}`;
 
-        // Llama 3.3 70B — strongest free production model on Groq for code reasoning
-        const MODEL = "llama-3.3-70b-versatile";
+        // Recommended model for coding & reasoning on Groq:
+        const MODEL = process.env.GROQ_MODEL || "qwen/qwen3.8-27b";
         const url = "https://api.groq.com/openai/v1/chat/completions";
 
         const response = await axios.post(
